@@ -24,7 +24,7 @@ import utn.frsf.ofa.cursojava.tp.integrador.servicio.RecetaService;
  * @author mdominguez
  */
 
-// TODO: definir anotacion de ambito 
+@SessionScoped
 @Named("recetaController")
 public class RecetaController implements Serializable {
 
@@ -77,9 +77,8 @@ public class RecetaController implements Serializable {
 
     public String guardar() {
         recetaSeleccionada.setIngredientes(this.ingredientesDisponibles.getTarget());
-        // TODO completar el metodo guardar
-        // setear el autor de la receta seleccionada
-        // invocar al metodo qeu guarda la receta
+        recetaSeleccionada.setAutor(this.autorSeleccionado);
+        this.recetaSrv.guardar(recetaSeleccionada);
         this.recetaSeleccionada = null;
         return null;
     }
@@ -87,7 +86,7 @@ public class RecetaController implements Serializable {
     public String nuevo() {
         this.recetaSeleccionada = new Receta();
         this.recetaSeleccionada.setIngredientes(new ArrayList<>());
-        this.ingredientesDisponibles.setTarget(new ArrayList<Ingrediente>());
+        this.ingredientesDisponibles.setTarget(this.ingredienteSrv.listar());
         return null;
     }
 
@@ -99,5 +98,4 @@ public class RecetaController implements Serializable {
         this.autorSeleccionado = autorSeleccionado;
     }
 
-    
 }

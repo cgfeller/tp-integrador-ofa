@@ -24,7 +24,8 @@ import javax.persistence.TemporalType;
  * @author mdominguez
  */
 @Entity
-public class Receta implements Serializable{
+public class Receta implements Serializable {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
@@ -33,16 +34,21 @@ public class Receta implements Serializable{
     private Double precio;
     private Integer duracionEstimada;
 
-    
-    // TODO Completar mapeo de fecha
+    @Temporal(TemporalType.DATE)
     private Date fechaCreacion;
 
-    // TODO Completar mapeo de relacion
+    @ManyToMany
+    @JoinTable(name = "receta_ingredientes", joinColumns = @JoinColumn(name = "id_receta"), inverseJoinColumns = @JoinColumn(name = "id_ingredientes"))
     private List<Ingrediente> ingredientes;
-    
-    // TODO Completar mapeo de relacion
+
+    @ManyToOne
+    @JoinColumn(name = "id_autor")
     private Autor autor;
-    
+
+    @ManyToOne
+    @JoinColumn(name = "id_pedido")
+    private Pedido pedido;
+
     public Integer getId() {
         return id;
     }
@@ -106,7 +112,13 @@ public class Receta implements Serializable{
     public void setAutor(Autor autor) {
         this.autor = autor;
     }
-    
 
-    
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
+
 }

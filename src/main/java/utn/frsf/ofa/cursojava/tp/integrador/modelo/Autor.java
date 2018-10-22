@@ -25,7 +25,7 @@ public class Autor implements Serializable{
     private Integer id;
     private String nombre;
     
-    // TODO Completar mapeo de relacion
+    @OneToMany(mappedBy = "autor")
     private List<Receta> recetasCreadas;
 
     public Integer getId() {
